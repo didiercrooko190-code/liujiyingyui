@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-    private static final String APP_URL = "https://yingyuliuji-cet6-site-d9gylgujna5c5eef5.webapps.tcloudbase.com/";
+    private static final String APP_URL = "https://cet6-full.vercel.app/";
 
     private WebView webView;
     private ProgressBar progressBar;
