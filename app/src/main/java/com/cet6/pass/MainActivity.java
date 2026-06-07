@@ -3,8 +3,6 @@ package com.cet6.pass;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -16,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-    private static final String APP_URL = "https://cet6-full.vercel.app/";
+    private static final String APP_URL = "file:///android_asset/site/index.html";
 
     private WebView webView;
     private ProgressBar progressBar;
@@ -39,8 +37,10 @@ public class MainActivity extends Activity {
         settings.setMediaPlaybackRequiresUserGesture(false);
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
-        settings.setAllowFileAccess(false);
+        settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
+        settings.setAllowFileAccessFromFileURLs(true);
+        settings.setAllowUniversalAccessFromFileURLs(true);
         settings.setBuiltInZoomControls(false);
         settings.setDisplayZoomControls(false);
 
@@ -74,11 +74,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        if (hasNetwork()) {
-            webView.loadUrl(APP_URL);
-        } else {
-            offlineView.setVisibility(View.VISIBLE);
-        }
+        webView.loadUrl(APP_URL);
     }
 
     @Override
@@ -90,10 +86,4 @@ public class MainActivity extends Activity {
         }
     }
 
-    private boolean hasNetwork() {
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        if (manager == null) return true;
-        NetworkInfo info = manager.getActiveNetworkInfo();
-        return info != null && info.isConnected();
-    }
 }
